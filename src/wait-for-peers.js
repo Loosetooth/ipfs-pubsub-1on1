@@ -21,7 +21,7 @@ const waitForPeers = async (ipfs, peersToWait, topic) => {
       } catch (e) {
         reject(e)
       }
-    }, 100)
+    }, 1000)
   })
 }
 

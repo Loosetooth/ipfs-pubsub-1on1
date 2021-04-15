@@ -14,6 +14,8 @@ class DirectChannel extends EventEmitter {
   constructor (ipfs, receiverID) {
     super()
 
+    this.connected = false
+
     // IPFS instance to use internally
     this._ipfs = ipfs
 
@@ -47,6 +49,7 @@ class DirectChannel extends EventEmitter {
 
   async connect () {
     await waitForPeers(this._ipfs, [this._receiverID], this._id)
+    this.connected = true
   }
 
   /**
@@ -64,6 +67,7 @@ class DirectChannel extends EventEmitter {
   close () {
     this.removeAllListeners('message')
     this._ipfs.pubsub.unsubscribe(this._id, this._messageHandler)
+    this.connected = false
   }
 
   async _setup () {
